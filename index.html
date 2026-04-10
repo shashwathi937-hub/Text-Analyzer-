@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #574fd6;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📝 Text Analyzer</h1>
+
+    <textarea id="textInput" placeholder="Enter your text here..."></textarea><br>
+
+    <button onclick="analyzeText()">Analyze</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function analyzeText() {
+            let str = document.getElementById("textInput").value;
+
+            let characters = 0;
+            let words = 0;
+            let vowels = 0;
+            let consonants = 0;
+            let special = 0;
+
+            for (let i = 0; i < str.length; i++) {
+                let ch = str[i];
+
+                // Count characters (excluding newline)
+                if (ch !== '\n') {
+                    characters++;
+                }
+
+                // Check alphabet
+                if (/[a-zA-Z]/.test(ch)) {
+                    let lower = ch.toLowerCase();
+
+                    if ("aeiou".includes(lower)) {
+                        vowels++;
+                    } else {
+                        consonants++;
+                    }
+                }
+                // Special characters
+                else if (!/[a-zA-Z0-9 ]/.test(ch) && ch !== '\n') {
+                    special++;
+                }
+            }
+
+            // Word count
+            let trimmed = str.trim();
+            if (trimmed.length > 0) {
+                words = trimmed.split(/\s+/).length;
+            }
+
+            // Display result
+            document.getElementById("result").innerHTML = `
+                <p><b>Characters:</b> ${characters}</p>
+                <p><b>Words:</b> ${words}</p>
+                <p><b>Vowels:</b> ${vowels}</p>
+                <p><b>Consonants:</b> ${consonants}</p>
+                <p><b>Special Characters:</b> ${special}</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
